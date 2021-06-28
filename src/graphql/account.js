@@ -72,7 +72,7 @@ const resolvers = {
       const account = await services.account.findByEmail(email);
       return { token, account };
     },
-    async uploadUserImage(_, { inputFile }, { secrets, currentAccountId }) {
+    async uploadUserImage(_, { inputFile }, { services, secrets, currentAccountId }) {
       const { filename, mimetype, stream } = await inputFile;
       const { bucket, region } = await secrets.s3.get();
       const s3Url = await s3Helper.uploadFileToS3UsingStream(
@@ -86,9 +86,10 @@ const resolvers = {
         },
         filename.split('.')[0],
       );
+      await services.account.getChangeProfileImageUrl(currentAccountId, s3Url.url);
       return {
         message: successMessages.userImageUpdated,
-        url: s3Url,
+        url: s3Url.url,
       };
     },
   },
