@@ -25,6 +25,7 @@ function getS3(region = null) {
 }
 
 exports.uploadFileToS3UsingPath = async (
+  // OLD WAY. PLEASE USE STREAM METHOD
   contentType,
   fileExtension,
   uploadFilePath,
