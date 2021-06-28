@@ -18,6 +18,9 @@ export default class AuthenticationService {
     }
 
     const secret = await this.jwtSecret.get();
-    return { token: jwt.sign({ email, id: account.userId }, secret), userId: account.userId };
+    return {
+      token: jwt.sign({ email, id: account.userId }, secret),
+      userId: account.userId,
+    };
   }
 }

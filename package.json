@@ -16,18 +16,21 @@
   "dependencies": {
     "@babel/runtime": "^7.14.6",
     "apollo-server": "^2.25.1",
-    "aws-sdk": "^2.931.0",
+    "aws-sdk": "^2.935.0",
     "babel-eslint": "^10.1.0",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
+    "fs": "^0.0.1-security",
     "graphql": "^15.5.1",
     "graphql-scalars": "^1.10.0",
+    "graphql-tools": "^4.0.5",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.6",
     "lodash": "^4.17.21",
     "lodash.merge": "^4.6.2",
     "mysql": "^2.18.1",
-    "graphql-tools": "^4.0.5"
+    "util": "^0.12.4",
+    "graphql-upload": "^8.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.5",

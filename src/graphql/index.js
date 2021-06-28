@@ -2,8 +2,8 @@ import { gql, makeExecutableSchema } from 'apollo-server';
 import merge from 'lodash.merge';
 import account from './account';
 import AuthenticatedDirective from './directives/authenticated';
-import createHasRoleDirective from "./directives/has-role";
-import createHasPermissionDirective from "./directives/has-permission";
+import createHasRoleDirective from './directives/has-role';
+import createHasPermissionDirective from './directives/has-permission';
 
 const defaultTypeDefs = gql`
   directive @authenticated on OBJECT | FIELD_DEFINITION

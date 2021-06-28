@@ -67,7 +67,7 @@ export class SecretsCache {
         .then((res) => {
           const decoded = simpleDecode(
             res.SecretString,
-            [].concat(DbSecrets.keys(), JwtSecret.keys()),
+            [].concat(DbSecrets.keys(), JwtSecret.keys(), S3Secrets.keys()),
           );
           ttl = Number(decoded.TTL) || DEFAULT_TTL;
           this.state.ttl = ttl;
@@ -76,7 +76,7 @@ export class SecretsCache {
         })
         .catch(() => {
           //eslint-disable-line
-          const envVars = [...DbSecrets.keys(), ...JwtSecret.keys()];
+          const envVars = [...DbSecrets.keys(), ...JwtSecret.keys(), ...S3Secrets.keys()];
           throw new Error(`Missing some required env variables \n\t${envVars.join(`\n\t`)}`);
         });
 
@@ -133,5 +133,29 @@ export class JwtSecret {
       return process.env.JWT_SECRET;
     }
     return this.cache.get().then((secrets) => secrets.JWT_SECRET);
+  }
+}
+
+export class S3Secrets {
+  constructor(cache) {
+    this.cache = cache;
+  }
+
+  static keys() {
+    return ['S3_BUCKET', 'S3_REGION'];
+  }
+
+  // Returns `{ bucket: string, region: string }`;
+  async get() {
+    if (process.env.S3_BUCKET || process.env.NODE_ENV) {
+      return {
+        bucket: process.env.S3_BUCKET || `s3.${process.env.NODE_ENV}.sfrhub.com`,
+        region: process.env.S3_REGION || process.env.AWS_REGION,
+      };
+    }
+    return this.cache.get(this.key, this.ttl).then((secret) => ({
+      bucket: secret.S3_BUCKET,
+      region: secret.S3_REGION,
+    }));
   }
 }

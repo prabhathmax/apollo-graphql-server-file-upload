@@ -34,7 +34,7 @@ export default class AuthenticatedDirective extends SchemaDirectiveVisitor {
 
     const fields = objectType.getFields();
 
-    Object.values(fields).forEach(field => {
+    Object.values(fields).forEach((field) => {
       const { resolve = defaultFieldResolver } = field;
 
       field.resolve = async function resolveFun(...args) {

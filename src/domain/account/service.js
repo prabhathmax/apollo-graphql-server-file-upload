@@ -18,6 +18,10 @@ class AccountService {
   async findByEmail(email) {
     return this.repository.findByEmail(email);
   }
+
+  async getChangeProfileImageUrl(userId, image) {
+    return this.repository.changeProfileImageUrl(userId, image);
+  }
 }
 
 export default AccountService;

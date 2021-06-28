@@ -1,6 +1,6 @@
 import Knex from 'knex';
 import 'dotenv/config';
-import { SecretsCache, DbSecrets, JwtSecret } from './helpers/secretsCache';
+import { SecretsCache, DbSecrets, JwtSecret, S3Secrets } from './helpers/secretsCache';
 import AccountRepository from './domain/account/repository';
 import AccountService from './domain/account/service';
 import AuthenticationService from './domain/authentication/service';
@@ -13,6 +13,7 @@ const createContext = async () => {
   const secretsCache = new SecretsCache();
   const dbSecrets = new DbSecrets(secretsCache);
   const jwtSecret = new JwtSecret(secretsCache);
+  const s3Secret = new S3Secrets(secretsCache);
   const knex = Knex({
     client: 'mysql',
     connection: await dbSecrets.getAsKnex(),
@@ -31,6 +32,7 @@ const createContext = async () => {
     secrets: {
       db: dbSecrets,
       jwt: jwtSecret,
+      s3: s3Secret,
     },
     repositories: {
       account: accountRepository,

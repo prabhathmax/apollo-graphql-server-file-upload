@@ -39,7 +39,7 @@ const createHasPermissionDirective = (roleService, permissionService) =>
 
       const fields = objectType.getFields();
 
-      Object.values(fields).forEach(field => {
+      Object.values(fields).forEach((field) => {
         const { resolve = defaultFieldResolver } = field;
 
         field.resolve = async function resolveFun(...args) {
@@ -58,9 +58,9 @@ const createHasPermissionDirective = (roleService, permissionService) =>
 
           const roles = await roleService.findForAccountId(context.currentAccountId);
           const permissions = new Set(
-            (await Promise.all(roles.map(r => permissionService.findForRole(r.id))))
+            (await Promise.all(roles.map((r) => permissionService.findForRole(r.id))))
               .flat()
-              .map(rr => rr.name),
+              .map((rr) => rr.name),
           );
 
           if (!permissions.has(permission)) {

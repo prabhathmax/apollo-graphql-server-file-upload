@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 
 const profileForAccount = async (knex, userId) =>
   knex('profiles')
-    .select(['userId', 'firstName', 'lastName', 'middleName', 'createdAt', 'updatedAt'])
+    .select(['userId', 'firstName', 'lastName', 'middleName', 'imageUrl', 'createdAt', 'updatedAt'])
     .where({ userId })
     .first();
 
@@ -75,6 +75,12 @@ class AccountRepository {
     }
 
     return null;
+  }
+
+  async changeProfileImageUrl(userId, imageUrl) {
+    return this.database('profiles').where({ userId }).update({
+      imageUrl,
+    });
   }
 }
 
