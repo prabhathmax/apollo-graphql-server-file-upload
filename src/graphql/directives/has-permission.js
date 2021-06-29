@@ -58,7 +58,7 @@ const createHasPermissionDirective = (roleService, permissionService) =>
 
           const roles = await roleService.findForAccountId(context.currentAccountId);
           const permissions = new Set(
-            (await Promise.all(roles.map((r) => permissionService.findForRole(r.id))))
+            (await Promise.all(roles.map((r) => permissionService.findForRole(r.roleId))))
               .flat()
               .map((rr) => rr.name),
           );

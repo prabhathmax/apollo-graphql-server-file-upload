@@ -1,21 +1,14 @@
 class RoleRepository {
   constructor(knex) {
     this.database = knex;
-    this.columns = [
-      'id',
-      'name',
-      'display_name as displayName',
-      'description',
-      'created_at as createdAt',
-      'updated_at as updatedAt',
-    ];
+    this.columns = ['roles.roleId', 'name', 'displayName', 'description', 'createdAt', 'updatedAt'];
   }
 
-  async findForAccountId(accountId) {
-    return this.database('role_user')
+  async findForAccountId(userId) {
+    return this.database('roleUser')
       .select(this.columns)
-      .where({ user_id: accountId })
-      .leftOuterJoin('roles', 'role_user.role_id', 'roles.id');
+      .where({ userId })
+      .leftOuterJoin('roles', 'roleUser.roleId', 'roles.roleId');
   }
 }
 
